@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Mon 1er jeu Phaser</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+
+
+<body>
+
+    <script type="text/javascript">
+
+var config = {
+    type: Phaser.AUTO,
+    width: 5000, height: 5000,
+    physics : {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 300},
+            debug: false 
+        }},
+scene: {preload: preload, create: create, update: update }
+};
+new Phaser.Game(config);
+
+
+function preload(){
+
+    this.load.image("Tiled_niveau.png");
+    this.load.tilemapTiledJSON("carte", "Niveau_final.json");
+    this.load.spritesheet('perso', 'Assets1/Scientifique.png',
+    { frameWidth: 32, frameHeight: 64});
+}
+
+// chargement de la carte
+const Tiled_niveau = this.add.tilemap("carte");
+
+// chargement du jeu de tuiles
+const tileset = Tiled_niveau.addTilesetImage(
+          "tuiles_de_jeu",
+          "Phaser_tuilesdejeu"
+        );  
+
+        // chargement du calque calque_background
+const calque_background = Tiled_niveau.createLayer(
+          "calque_background",
+          tileset
+        );
+
+// chargement du calque calque_background_2
+const calque_background_2 = Tiled_niveau.createLayer(
+          "calque_background_2",
+          tileset
+        );
+
+// chargement du calque calque_plateformes
+const calque_plateformes = Tiled_niveau.createLayer(
+          "calque_plateformes",
+          tileset
+        );  
+
+        // définition des tuiles de plateformes qui sont solides
+// utilisation de la propriété estSolide
+calque_plateformes.setCollisionByProperty({ estSolide: true }); 
+   
+// ajout d'une collision entre le joueur et le calque plateformes
+this.physics.add.collider(player, plateformes); 
+
+
+   </script>
+</body>
